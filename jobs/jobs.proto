@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package jobs;
+
+import "google/api/annotations.proto";
+
+
+message CreateJobRequest {
+    string path = 1;
+    string status = 2;
+    string alias = 3;
+}
+
+message Job {
+    int32 id = 1;
+    string path = 2;
+    string status = 3;
+    string alias = 4;
+}
+
+message Jobs {
+    repeated Job jobs = 1;
+}
+
+message Empty {}
+
+service JobsApi {
+    rpc CreateJob (CreateJobRequest) returns (Job){
+        option (google.api.http) = {
+            post: "/v1/jobs"
+            body: "*"
+        };
+    }
+
+    rpc GetAllJobs (Empty) returns (Jobs){
+        option (google.api.http) = {
+            get: "/v1/jobs"
+        };
+    }
+}
