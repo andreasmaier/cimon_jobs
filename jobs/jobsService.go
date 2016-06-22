@@ -7,15 +7,7 @@ import (
 	"errors"
 )
 
-type JenkinsJob struct {
-	Id int32 `json:"id"`
-	Server string `json:"server"`
-	Path string `json:"path"`
-	Status string `json:"status"`
-	Alias string `json:"alias"`
-}
-
-func createJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
+func CreateJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
 	if job.Path == "" {
 		return nil, errors.New("Empty path name for job not allowed")
 	}
@@ -52,7 +44,7 @@ func createJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
 	}
 }
 
-func getAllJobs() ([]*JenkinsJob, error) {
+func GetAllJobsFromDb() ([]*JenkinsJob, error) {
 	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
 	defer con.Close()
 
@@ -78,46 +70,19 @@ func getAllJobs() ([]*JenkinsJob, error) {
 	return jobs, nil
 }
 
-//func UpdateJob(id int, status string) {
-//	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
-//	defer con.Close()
-//
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	if _, err := con.Exec("UPDATE jobs SET status=? WHERE id=?", status, id); err != nil {
-//		panic(err)
-//	} else {
-//		fmt.Printf("Updated job %d to status '%s'", id, status)
-//	}
-//}
-//
-//func isJobWatched(path string) bool {
-//	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
-//	defer con.Close()
-//
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	return (con.QueryRow("SELECT path from jobs where path=?", path).Scan(&path) == nil)
-//}
-//
-//func GetByPath(path string) *JenkinsJob {
-//	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
-//	defer con.Close()
-//
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	job := new(JenkinsJob)
-//
-//	if err := con.QueryRow("SELECT * from jobs where path=?", path).
-//			Scan(&job.Id, &job.Path, &job.Status, &job.Alias); err != nil {
-//		panic(err)
-//	}
-//
-//	return job
-//}
+func UpdateJobInDb(path string, status string) (error){
+	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
+	defer con.Close()
+
+	if err != nil {
+		return err
+	}
+
+	if _, err := con.Exec("UPDATE jobs SET status=? WHERE path=?", status, path); err != nil {
+		return err
+	} else {
+		fmt.Printf("Updated job %d to status '%s'", path, status)
+
+		return nil
+	}
+}

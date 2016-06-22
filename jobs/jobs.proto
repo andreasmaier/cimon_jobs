@@ -22,6 +22,11 @@ message Jobs {
     repeated Job jobs = 1;
 }
 
+message UpdateStatusRequest {
+    string path = 1;
+    string status = 2;
+}
+
 message Empty {}
 
 service JobsApi {
@@ -35,6 +40,13 @@ service JobsApi {
     rpc GetAllJobs (Empty) returns (Jobs){
         option (google.api.http) = {
             get: "/v1/jobs"
+        };
+    }
+
+    rpc UpdateJobStatus (UpdateStatusRequest) returns (Empty) {
+        option (google.api.http) = {
+            put: "/v1/jobs"
+            body: "*"
         };
     }
 }

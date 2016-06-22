@@ -15,6 +15,7 @@ import (
 	"google.golang.org/grpc/credentials"
 	"github.com/andreasmaier/cimon_jobs/jobs"
 	"github.com/philips/grpc-gateway-example/insecure"
+	"github.com/andreasmaier/cimon_jobs/handlers"
 )
 
 const (
@@ -64,7 +65,7 @@ func main() {
 		grpc.Creds(credentials.NewClientTLSFromCert(demoCertPool, "localhost:50051"))}
 
 	grpcServer := grpc.NewServer(opts...)
-	jobs.RegisterJobsApiServer(grpcServer, new(jobs.JobsServer))
+	jobs.RegisterJobsApiServer(grpcServer, new(handlers.JobsServer))
 	ctx := context.Background()
 
 	dcreds := credentials.NewTLS(&tls.Config{
