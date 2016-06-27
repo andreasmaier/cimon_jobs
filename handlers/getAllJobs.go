@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"golang.org/x/net/context"
 	"github.com/andreasmaier/cimon_jobs/jobs"
+	"golang.org/x/net/context"
 )
 
 func (s *JobsServer) GetAllJobs(ctx context.Context, in *jobs.Empty) (*jobs.Jobs, error) {

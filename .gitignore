@@ -1,5 +1,5 @@
 .idea/
 
-jobs/jobs.pb.*
+#jobs/jobs.pb.*
 
 cimon_jobs.iml

@@ -1,21 +1,21 @@
 package main
 
 import (
-	"google.golang.org/grpc"
 	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 
-	"fmt"
-	"net/http"
-	"github.com/gengo/grpc-gateway/runtime"
-	"net"
-	"strings"
 	"crypto/tls"
 	"crypto/x509"
-	"log"
-	"google.golang.org/grpc/credentials"
-	"github.com/andreasmaier/cimon_jobs/jobs"
-	"github.com/philips/grpc-gateway-example/insecure"
+	"fmt"
 	"github.com/andreasmaier/cimon_jobs/handlers"
+	"github.com/andreasmaier/cimon_jobs/jobs"
+	"github.com/gengo/grpc-gateway/runtime"
+	"github.com/philips/grpc-gateway-example/insecure"
+	"google.golang.org/grpc/credentials"
+	"log"
+	"net"
+	"net/http"
+	"strings"
 )
 
 const (
@@ -23,9 +23,9 @@ const (
 )
 
 var (
-	demoKeyPair *tls.Certificate
+	demoKeyPair  *tls.Certificate
 	demoCertPool *x509.CertPool
-	demoAddr string
+	demoAddr     string
 )
 
 func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
@@ -35,7 +35,7 @@ func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Ha
 			grpcServer.ServeHTTP(w, r)
 		} else {
 
-			if(r.Method == "OPTIONS") {
+			if r.Method == "OPTIONS" {
 				fmt.Printf("Handling HTTP with method %s\n", r.Method)
 				w.WriteHeader(http.StatusOK)
 			} else {
@@ -70,7 +70,7 @@ func main() {
 
 	dcreds := credentials.NewTLS(&tls.Config{
 		ServerName: demoAddr,
-		RootCAs: demoCertPool,
+		RootCAs:    demoCertPool,
 	})
 	dopts := []grpc.DialOption{grpc.WithTransportCredentials(dcreds)}
 
@@ -90,7 +90,7 @@ func main() {
 	}
 
 	srv := &http.Server{
-		Addr: demoAddr,
+		Addr:    demoAddr,
 		Handler: grpcHandlerFunc(grpcServer, mux),
 		TLSConfig: &tls.Config{
 			Certificates: []tls.Certificate{*demoKeyPair},

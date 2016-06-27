@@ -2,9 +2,9 @@ package jobs
 
 import (
 	"database/sql"
-	_ "github.com/ziutek/mymysql/godrv"
-	"fmt"
 	"errors"
+	"fmt"
+	_ "github.com/ziutek/mymysql/godrv"
 )
 
 func CreateJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
@@ -33,7 +33,7 @@ func CreateJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
 
 			newJob := new(JenkinsJob)
 			if err := con.QueryRow("SELECT * from jobs where id=?", id).
-			Scan(&newJob.Id, &newJob.Path, &newJob.Status, &newJob.Alias); err != nil {
+				Scan(&newJob.Id, &newJob.Path, &newJob.Status, &newJob.Alias); err != nil {
 				return nil, err
 			}
 
@@ -70,7 +70,7 @@ func GetAllJobsFromDb() ([]*JenkinsJob, error) {
 	return jobs, nil
 }
 
-func UpdateJobInDb(path string, status string) (error){
+func UpdateJobInDb(path string, status string) error {
 	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
 	defer con.Close()
 
