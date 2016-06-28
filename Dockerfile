@@ -13,12 +13,15 @@ FROM golang
 
 #COPY ../../.. go/src
 
-#COPY . /go/src/github.com/andreasmaier/cimon_jobs
+ADD . /go/src/github.com/andreasmaier/cimon_jobs
 
 RUN go get -u github.com/golang/protobuf/proto
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
+RUN go get -u github.com/gengo/grpc-gateway/runtime
+RUN go get -u github.com/philips/grpc-gateway-example/insecure
+RUN go get -u github.com/ziutek/mymysql/godrv
 
-RUN go get github.com/andreasmaier/cimon_jobs
+RUN go install github.com/andreasmaier/cimon_jobs
 
 #RUN go install github.com/andreasmaier/cimon_jobs
 
