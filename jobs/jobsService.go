@@ -12,7 +12,7 @@ func CreateJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
 		return nil, errors.New("Empty path name for job not allowed")
 	}
 
-	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
+	con, err := sql.Open("mymysql", "tcp:mysql_db:3306*cimon_dev/cimon/changeme")
 	defer con.Close()
 
 	if err != nil {
@@ -45,7 +45,7 @@ func CreateJobInDb(job *JenkinsJob) (*JenkinsJob, error) {
 }
 
 func GetAllJobsFromDb() ([]*JenkinsJob, error) {
-	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
+	con, err := sql.Open("mymysql", "tcp:mysql_db:3306*cimon_dev/cimon/changeme")
 	defer con.Close()
 
 	if err != nil {
@@ -71,7 +71,7 @@ func GetAllJobsFromDb() ([]*JenkinsJob, error) {
 }
 
 func UpdateJobInDb(path string, status string) error {
-	con, err := sql.Open("mymysql", "cimon_dev/cimon/changeme")
+	con, err := sql.Open("mymysql", "tcp:mysql_db:3306*cimon_dev/cimon/changeme")
 	defer con.Close()
 
 	if err != nil {
