@@ -10,12 +10,12 @@ import (
 	"github.com/andreasmaier/cimon_jobs/handlers"
 	"github.com/andreasmaier/cimon_jobs/jobs"
 	"github.com/gengo/grpc-gateway/runtime"
-	"github.com/philips/grpc-gateway-example/insecure"
 	"google.golang.org/grpc/credentials"
 	"log"
 	"net"
 	"net/http"
 	"strings"
+	"github.com/andreasmaier/cimon_jobs/insecure"
 )
 
 const (
